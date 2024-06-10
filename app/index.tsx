@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import SplashScreen from '../components/navigation/SplashScreen'; // Certifique-se de que o caminho está correto
+import SplashScreen from '../components/navigation/SplashScreen';
 
 export default function App() {
   return (
