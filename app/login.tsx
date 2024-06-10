@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function LoginScreen() {
   return (
@@ -16,9 +17,20 @@ export default function LoginScreen() {
         secureTextEntry
       />
       <View style={styles.buttonContainer}>
-        <Button title="Entrar" onPress={() => { }} color="#34A853" />
-        <TouchableOpacity onPress={() => { }} style={styles.outlinedButton}>
-          <Text style={styles.outlinedButtonText}>Criar conta</Text>
+        <LinearGradient
+          colors={['#628754', '#7E9F70']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradientButton}
+        >
+        <Button
+          onPress={() => { }}
+          color="transparent"
+          title={<Text style={styles.buttonText}>Entrar</Text>}
+        />
+        </LinearGradient>
+        <TouchableOpacity onPress={() => { }} style={[styles.button, { backgroundColor: '#fafff9', borderColor: '#7E9F70' }]}>
+          <Text style={[styles.buttonText, { color: '#7E9F70' }]}>Criar conta</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.link}>Esqueci minha senha</Text>
@@ -30,7 +42,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
     backgroundColor: '#fafff9',
@@ -38,40 +49,64 @@ const styles = StyleSheet.create({
   image: {
     width: 30,
     height: 36,
-    marginBottom: 16,
+    marginBottom: 40,
+    marginTop: 20,
   },
   title: {
-    textAlign: 'center',
-    fontSize: 34,
+    fontSize: 30,
     marginBottom: 24,
-    fontWeight: 700,
+    fontWeight: '700',
+    fontFamily: 'NunitoSans',
   },
   input: {
     width: '100%',
-    padding: 10,
-    marginVertical: 8,
+    height: '9%',
+    padding: 15,
+    marginVertical: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
+    borderColor: '#7E9F70',
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
+    fontFamily: 'Open Sans',
+    color: '#06150080',
+    fontSize: 14,
+    fontWeight: 600
   },
   buttonContainer: {
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 25,
   },
-  outlinedButton: {
-    borderWidth: 1,
-    borderColor: '#34A853',
-    backgroundColor: 'transparent',
+  gradientButton: {
+    borderRadius: 37,
+    overflow: 'hidden',
+    width: '100%',
+    height: '50%',
+    marginBottom: 20,
+    justifyContent: 'center'
+  },
+  button: {
+    width: '100%',
+    height: '50%',
+    borderRadius: 37,
     padding: 10,
+    marginBottom: 8,
+    borderWidth: 1,
+    justifyContent: 'center'
   },
-  outlinedButtonText: {
-    color: '#34A853',
+  buttonText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'NunitoSans',
+    fontSize: 16,
   },
   link: {
-    color: '#007BFF',
-    marginTop: 16,
+    color: '#061500',
+    marginTop: 40,
+    fontFamily: 'Open Sans',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });
