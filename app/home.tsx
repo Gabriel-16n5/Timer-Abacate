@@ -25,11 +25,16 @@ export default function SplashScreen() {
   return (
     <View style={styles.container}>
         <AvocadoStore/>
+        <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.imageimageJuju}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+    imageJuju: {
+        width: 210,
+        height: 240,
+    },
     avocadoStoreContainer: {
         position: 'absolute',
         top: 30,
