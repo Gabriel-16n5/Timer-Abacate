@@ -3,10 +3,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
-const PomodoroTimer = () => {
+const PomodoroTimer = ({ onReset }) => {
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [timerRunning, setTimerRunning] = useState(false);
     const [sliderVisible, setSliderVisible] = useState(true);
+    const [stopModalVisible, setStopModalVisible] = useState(false);
 
     useEffect(() => {
         if (timerRunning && timeRemaining > 0) {
@@ -29,12 +30,15 @@ const PomodoroTimer = () => {
     const pauseTimer = () => {
         setTimerRunning(false);
         setSliderVisible(true);
+        setStopModalVisible(true);
     };
 
     const resetTimer = () => {
         setTimeRemaining(0);
         setTimerRunning(false);
         setSliderVisible(true);
+        setStopModalVisible(false);
+        onReset();
     };
 
     const formatTime = (time) => {
@@ -45,36 +49,61 @@ const PomodoroTimer = () => {
 
     return (
         <>
-        <Text style={styles.timerText}>{formatTime(timeRemaining)}</Text>
-        <View style={styles.timerContainer}>
-            {sliderVisible && (
-                <Slider
-                    style={{width: 200, height: 40}}
-                    trackStyle={styles.track}
-                    thumbImage={require('@/assets/images/avocado.png')}
-                    thumbStyle={styles.thumb}
-                    minimumTrackTintColor='#a7c99a'
-                    thumbTouchSize={{ width: 50, height: 40 }}
-                    minimumValue={0}
-                    maximumValue={12}
-                    step={1}
-                    onValueChange={(value) => setTimeRemaining(value * 5 * 60)}
-                />
-            )}
-            {timerRunning ? (
-                <TouchableOpacity onPress={pauseTimer}>
-                    <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5 }}>
-                        <Ionicons name="stop" size={24} color="white" />
+            <Text style={styles.timerText}>{formatTime(timeRemaining)}</Text>
+            <View style={styles.timerContainer}>
+                {sliderVisible && (
+                    <Slider
+                        style={{ width: 200, height: 40 }}
+                        trackStyle={styles.track}
+                        thumbImage={require('@/assets/images/avocado.png')}
+                        thumbStyle={styles.thumb}
+                        minimumTrackTintColor='#a7c99a'
+                        thumbTouchSize={{ width: 50, height: 40 }}
+                        minimumValue={0}
+                        maximumValue={12}
+                        step={1}
+                        onValueChange={(value) => setTimeRemaining(value * 5 * 60)}
+                    />
+                )}
+                {timerRunning ? (
+                    <TouchableOpacity onPress={pauseTimer}>
+                        <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5 }}>
+                            <Ionicons name="stop" size={24} color="white" />
+                        </View>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity onPress={startTimer}>
+                        <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5 }}>
+                            <Ionicons name="play" size={24} color="white" />
+                        </View>
+                    </TouchableOpacity>
+                )}
+            </View>
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={stopModalVisible}
+                onRequestClose={() => {
+                    setStopModalVisible(!stopModalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <TouchableOpacity
+                            style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
+                            onPress={() => setStopModalVisible(!stopModalVisible)}
+                        >
+                            <Text style={styles.textStyle}>X</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.modalText}>Tem certeza que vai desistir bem?</Text>
+                        <Text style={styles.modalTextBody}>Cuidado, se desistir vai perder um abacate. Como assim não gosta de abacate?</Text>
+                        <TouchableOpacity onPress={resetTimer} style={styles.desistirButton}>
+                            <Text style={styles.desistirButtonText}>Desistir</Text>
+                        </TouchableOpacity>
+                        <Image source={require('@/assets/images/juju_Desistir.png')} style={styles.imageOverlay} />
                     </View>
-                </TouchableOpacity>
-            ) : (
-                <TouchableOpacity onPress={startTimer}>
-                    <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5 }}>
-                        <Ionicons name="play" size={24} color="white" />
-                    </View>
-                </TouchableOpacity>
-            )}
-        </View>
+                </View>
+            </Modal>
         </>
     );
 };
@@ -105,7 +134,7 @@ const AvocadoStore = () => {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <TouchableOpacity
-                            style={[styles.buttonClose, {alignSelf: 'flex-start'}]}
+                            style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
                             <Text style={styles.textStyle}>X</Text>
@@ -120,13 +149,16 @@ const AvocadoStore = () => {
     );
 };
 
-
 export default function SplashScreen() {
+    const handleReset = () => {
+        console.log("Timer reset and navigated to home.");
+    };
+
     return (
         <View style={styles.container}>
             <AvocadoStore />
             <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.imageJuju} />
-            <PomodoroTimer />
+            <PomodoroTimer onReset={handleReset} />
         </View>
     );
 }
@@ -234,7 +266,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#2196F3",
     },
     textStyle: {
-        
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
     },
     modalText: {
         marginBottom: 15,
@@ -251,6 +285,17 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: '#1F371B',
         fontFamily: 'Open Sans',
+    },
+    desistirButton: {
+        backgroundColor: '#E24C4B',
+        borderRadius: 20,
+        padding: 10,
+        marginTop: 20,
+    },
+    desistirButtonText: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
     },
     imageOverlay: {
         width: 380,
