@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-na
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 
-const PomodoroTimer = ({ onReset }) => {
+const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [timerRunning, setTimerRunning] = useState(false);
     const [sliderVisible, setSliderVisible] = useState(true);
@@ -15,8 +15,10 @@ const PomodoroTimer = ({ onReset }) => {
                 setTimeRemaining(prevTime => prevTime - 1);
             }, 1000);
             return () => clearInterval(interval);
-        } else if (timeRemaining === 0) {
+        } else if (timeRemaining === 0 && timerRunning) {
             setTimerRunning(false);
+            setSliderVisible(true);
+            onComplete();
         }
     }, [timerRunning, timeRemaining]);
 
@@ -39,6 +41,7 @@ const PomodoroTimer = ({ onReset }) => {
         setSliderVisible(true);
         setStopModalVisible(false);
         onReset();
+        onDesist();
     };
 
     const formatTime = (time) => {
@@ -108,13 +111,8 @@ const PomodoroTimer = ({ onReset }) => {
     );
 };
 
-const AvocadoStore = () => {
-    const [avocadoMoney, setAvocadoMoney] = useState(0);
+const AvocadoStore = ({ avocadoMoney }) => {
     const [modalVisible, setModalVisible] = useState(false);
-
-    const handlers = () => {
-        console.log('vai para loja');
-    };
 
     return (
         <View style={styles.avocadoStoreContainer}>
@@ -150,15 +148,25 @@ const AvocadoStore = () => {
 };
 
 export default function SplashScreen() {
+    const [avocadoMoney, setAvocadoMoney] = useState(0);
+
     const handleReset = () => {
-        console.log("Timer reset and navigated to home.");
+        console.log("Teste");
+    };
+
+    const handleComplete = () => {
+        setAvocadoMoney(prevMoney => prevMoney + 1);
+    };
+
+    const handleDesist = () => {
+        setAvocadoMoney(prevMoney => prevMoney - 1);
     };
 
     return (
         <View style={styles.container}>
-            <AvocadoStore />
+            <AvocadoStore avocadoMoney={avocadoMoney} />
             <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.imageJuju} />
-            <PomodoroTimer onReset={handleReset} />
+            <PomodoroTimer onReset={handleReset} onComplete={handleComplete} onDesist={handleDesist} />
         </View>
     );
 }
