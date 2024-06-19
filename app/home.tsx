@@ -111,13 +111,16 @@ const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
     );
 };
 
-const AvocadoStore = ({ avocadoMoney }) => {
+const AvocadoStore = ({ avocadoMoney, setSelectedImage }) => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [halfModalVisible, setHalfModalVisible] = useState(false);
 
     return (
         <View style={styles.avocadoStoreContainer}>
-            <TouchableOpacity style={styles.avocadoContainer} onPress={() => setModalVisible(true)}>
-                <Image source={require('@/assets/images/avocado.png')} style={styles.image} />
+            <TouchableOpacity style={styles.avocadoContainer} onPress={() => setHalfModalVisible(true)}>
+                <TouchableOpacity style={styles.imageTouchable} onPress={() => setModalVisible(true)}>
+                    <Image source={require('@/assets/images/avocado.png')} style={styles.image} />
+                </TouchableOpacity>
                 <Text style={styles.avocadoText}>{avocadoMoney}</Text>
             </TouchableOpacity>
 
@@ -143,12 +146,44 @@ const AvocadoStore = ({ avocadoMoney }) => {
                     </View>
                 </View>
             </Modal>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={halfModalVisible}
+                onRequestClose={() => {
+                    setHalfModalVisible(!halfModalVisible);
+                }}
+            >
+                <View style={styles.halfCenteredView}>
+                    <View style={styles.halfModalView}>
+                        <TouchableOpacity
+                            style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
+                            onPress={() => setHalfModalVisible(!halfModalVisible)}
+                        >
+                            <Text style={styles.textStyle}>X</Text>
+                        </TouchableOpacity>
+                        <View style={styles.imageRow}>
+                            <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/Vovo_juju.png')); }}>
+                                <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.smallImage} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/MC_juju.png')); }}>
+                                <Image source={require('@/assets/images/MC_juju.png')} style={styles.smallImage} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/Pato_Juju.png')); }}>
+                                <Image source={require('@/assets/images/Pato_Juju.png')} style={styles.smallImage} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
 
 export default function SplashScreen() {
     const [avocadoMoney, setAvocadoMoney] = useState(0);
+    const [selectedImage, setSelectedImage] = useState(require('@/assets/images/Vovo_juju.png'));
 
     const handleReset = () => {
         console.log("Teste");
@@ -164,8 +199,8 @@ export default function SplashScreen() {
 
     return (
         <View style={styles.container}>
-            <AvocadoStore avocadoMoney={avocadoMoney} />
-            <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.imageJuju} />
+            <AvocadoStore avocadoMoney={avocadoMoney} setSelectedImage={setSelectedImage} />
+            <Image source={selectedImage} style={styles.imageJuju} resizeMode="contain" />
             <PomodoroTimer onReset={handleReset} onComplete={handleComplete} onDesist={handleDesist} />
         </View>
     );
@@ -191,23 +226,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         borderWidth: 1,
-        borderRadius: 100,
-        backgroundColor: '#e4f0e2',
-        fontFamily: 'Open Sans',
-        color: '#06150080',
+        borderRadius: 8,
+        borderColor: '#A7C99A',
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
     },
     timerText: {
-        fontSize: 58,
-        fontWeight: 300,
-        marginTop: 80,
-        marginBottom: 10,
         fontFamily: 'Open Sans',
-        color: '#1B3810'
-    },
-    imageJuju: {
-        width: 210,
-        height: 240,
-        marginTop: 100
+        fontWeight: '300',
+        fontSize: 50,
+        color: '#1b3810',
     },
     avocadoStoreContainer: {
         position: 'absolute',
@@ -239,11 +270,8 @@ const styles = StyleSheet.create({
         borderColor: '#b3b8b1',
         backgroundColor: '#cddeca',
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#fafff9',
-        justifyContent: 'center',
-        alignItems: 'center',
+    imageTouchable: {
+        marginTop: 10,
     },
     centeredView: {
         flex: 1,
@@ -265,10 +293,27 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
+    halfCenteredView: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+    halfModalView: {
+        width: '100%',
+        height: '45%',
+        borderTopLeftRadius: 50, 
+        borderTopRightRadius: 50, 
+        backgroundColor: "#f4e3e1",
+        padding: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
     },
     buttonClose: {
         backgroundColor: "#2196F3",
@@ -294,21 +339,46 @@ const styles = StyleSheet.create({
         color: '#1F371B',
         fontFamily: 'Open Sans',
     },
-    desistirButton: {
-        backgroundColor: '#E24C4B',
-        borderRadius: 20,
-        padding: 10,
-        marginTop: 20,
-    },
-    desistirButtonText: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
     imageOverlay: {
         width: 380,
         height: 228,
         position: 'absolute',
         bottom: 0
     },
+    imageRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginTop: 20,
+    },
+    smallImage: {
+        width: 80,
+        height: 80,
+        resizeMode: 'contain'
+    },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fafff9'
+    },
+    desistirButton: {
+        backgroundColor: '#d9534f',
+        padding: 10,
+        borderRadius: 20,
+        marginTop: 20,
+    },
+    desistirButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    imageJuju: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain'
+    },
 });
+
+export default SplashScreen;
