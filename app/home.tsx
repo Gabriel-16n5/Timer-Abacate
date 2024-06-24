@@ -96,7 +96,7 @@ const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
                             style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
                             onPress={() => setStopModalVisible(!stopModalVisible)}
                         >
-                            <Text style={styles.textStyle}>X</Text>
+                            <Text style={styles.textStyleX}>X</Text>
                         </TouchableOpacity>
                         <Text style={styles.modalText}>Tem certeza que vai desistir bem?</Text>
                         <Text style={styles.modalTextBody}>Cuidado, se desistir vai perder um abacate. Como assim não gosta de abacate?</Text>
@@ -138,7 +138,7 @@ const AvocadoStore = ({ avocadoMoney, setSelectedImage }) => {
                             style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
                             onPress={() => setModalVisible(!modalVisible)}
                         >
-                            <Text style={styles.textStyle}>X</Text>
+                            <Text style={styles.textStyleX}>X</Text>
                         </TouchableOpacity>
                         <Text style={styles.modalText}>Para que servem os abacates?</Text>
                         <Text style={styles.modalTextBody}>Além de fazer bem e deixar o cabelo bonito, os abacates servem como moedas, ou seja, a cada timer completo você ganha um, porém se nao terminar vai perder abacate bem.</Text>
@@ -161,17 +161,26 @@ const AvocadoStore = ({ avocadoMoney, setSelectedImage }) => {
                             style={[styles.buttonClose, { alignSelf: 'flex-start' }]}
                             onPress={() => setHalfModalVisible(!halfModalVisible)}
                         >
-                            <Text style={styles.textStyle}>X</Text>
+                            <View style={styles.barrinha}></View>
                         </TouchableOpacity>
                         <View style={styles.imageRow}>
                             <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/Vovo_juju.png')); }}>
-                                <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.smallImage} />
+                                <View style={[styles.imageContainer, { backgroundColor: '#cddeca' }]}>
+                                    <Image source={require('@/assets/images/Vovo_juju.png')} style={styles.smallImage} />
+                                    <Text style={styles.imageText}>Vovó juju</Text>
+                                </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/MC_juju.png')); }}>
-                                <Image source={require('@/assets/images/MC_juju.png')} style={styles.smallImage} />
+                                <View style={[styles.imageContainer, { backgroundColor: '#dec3b4' }]}>
+                                    <Image source={require('@/assets/images/MC_juju.png')} style={styles.smallImage} />
+                                    <Text style={styles.imageText}>MC juju</Text>
+                                </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { setSelectedImage(require('@/assets/images/Pato_Juju.png')); }}>
-                                <Image source={require('@/assets/images/Pato_Juju.png')} style={styles.smallImage} />
+                                <View style={[styles.imageContainer, { backgroundColor: '#b6b4de' }]}>
+                                    <Image source={require('@/assets/images/Pato_Juju.png')} style={styles.smallImage} />
+                                    <Text style={styles.imageText}>Pato juju</Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -207,6 +216,14 @@ export default function SplashScreen() {
 }
 
 const styles = StyleSheet.create({
+    barrinha: {
+        width: 118,
+        height: 8,
+        backgroundColor: '#b4908c',
+        borderRadius: 100,
+        marginLeft: '90%'
+    },
+
     track: {
         height: 1,
         borderRadius: 100,
@@ -282,7 +299,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: "#defbd9",
-        padding: 35,
+        padding: 15,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -300,7 +317,7 @@ const styles = StyleSheet.create({
     },
     halfModalView: {
         width: '100%',
-        height: '45%',
+        height: '40%',
         borderTopLeftRadius: 50, 
         borderTopRightRadius: 50, 
         backgroundColor: "#f4e3e1",
@@ -316,28 +333,38 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        
     },
     textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
     },
+    textStyleX: {
+        color: "#1f371b",
+        textAlign: "center",
+        fontSize: 26,
+        marginLeft: 310
+    },
     modalText: {
+        marginTop: 15,
         marginBottom: 15,
         marginLeft: 20,
         fontSize: 30,
         fontWeight: '700',
         color: '#1F371B',
         fontFamily: 'Nunito Sans',
+        lineHeight: 40
     },
     modalTextBody: {
+        marginTop: 15,
         marginBottom: 15,
         marginLeft: 20,
         fontSize: 18,
         fontWeight: '400',
         color: '#1F371B',
         fontFamily: 'Open Sans',
+        lineHeight: 30
     },
     imageOverlay: {
         width: 380,
@@ -352,9 +379,28 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     smallImage: {
-        width: 80,
-        height: 80,
+        width: 90,
+        height: 140,
         resizeMode: 'contain'
+    },
+        imageContainer: {
+        width: 93,
+        height: 180,
+        borderRadius: 10,
+        overflow: 'hidden',
+        alignItems: 'center',
+    },
+        imageText: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'white',
+        color: '#5A312C',
+        textAlign: 'center',
+        paddingVertical: 5,
+        fontWeight: '500',
+        fontFamily: 'Nunito',
+        fontSize: 16
     },
     container: {
         flex: 1,
@@ -367,16 +413,20 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         marginTop: 20,
+        width: 140,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     desistirButtonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     imageJuju: {
-        width: 200,
-        height: 200,
+        width: 270,
+        height: 270,
         resizeMode: 'contain'
     },
 });
