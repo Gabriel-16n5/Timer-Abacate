@@ -61,7 +61,7 @@ const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
                         thumbImage={require('@/assets/images/avocado.png')}
                         thumbStyle={styles.thumb}
                         minimumTrackTintColor='#a7c99a'
-                        maximumTrackTintColor='#e4f0e2'
+                        maximumTrackTintColor='white'
                         thumbTouchSize={{ width: 50, height: 40 }}
                         minimumValue={0}
                         maximumValue={12}
@@ -71,7 +71,7 @@ const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
                 )}
                 {timerRunning ? (
                     <TouchableOpacity onPress={pauseTimer}>
-                        <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5 }}>
+                        <View style={{ backgroundColor: '#89362e', borderRadius: 50, padding: 5}}>
                             <Ionicons name="stop" size={24} color="white" />
                         </View>
                     </TouchableOpacity>
@@ -244,13 +244,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         borderWidth: 1,
-        borderRadius: 8,
-        borderColor: '#A7C99A',
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
+        borderRadius: 100,
+        borderColor: 'transparent',
+        shadowOpacity: 0,
         shadowRadius: 4,
         elevation: 5,
+        backgroundColor: '#e4f0e2'
     },
     timerText: {
         fontFamily: 'Open Sans',
@@ -407,7 +406,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fafff9'
+        backgroundColor: 'white'
     },
     desistirButton: {
         backgroundColor: '#d9534f',

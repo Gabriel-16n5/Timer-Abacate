@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#7E9F70',
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
     fontFamily: 'Open Sans',
     color: '#06150080',
     fontSize: 14,
