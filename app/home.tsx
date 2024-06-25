@@ -61,6 +61,7 @@ const PomodoroTimer = ({ onReset, onComplete, onDesist }) => {
                         thumbImage={require('@/assets/images/avocado.png')}
                         thumbStyle={styles.thumb}
                         minimumTrackTintColor='#a7c99a'
+                        maximumTrackTintColor='#e4f0e2'
                         thumbTouchSize={{ width: 50, height: 40 }}
                         minimumValue={0}
                         maximumValue={12}
@@ -225,14 +226,14 @@ const styles = StyleSheet.create({
     },
 
     track: {
-        height: 1,
-        borderRadius: 100,
+        height: 20,
+        borderRadius: 10,
         backgroundColor: '#A7C99A',
     },
     thumb: {
         width: 32,
         height: 38,
-        backgroundColor: 'rgba(255, 255, 255, 0)'
+        backgroundColor: 'rgba(255, 255, 255, 0)',
     },
     timerContainer: {
         width: '90%',

@@ -1,8 +1,16 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from 'expo-router';
 
 export default function LoginScreen() {
+  const navigation = useNavigation();
+  const navigationHandler = () => {
+    navigation.navigate("register")
+  }
+  const navigationHandlerHome = () => {
+    navigation.navigate("home")
+  }
   return (
     <View style={styles.container}>
       <Image source={require('@/assets/images/avocado.png')} style={styles.image} />
@@ -24,12 +32,12 @@ export default function LoginScreen() {
           style={styles.gradientButton}
         >
         <Button
-          onPress={() => { }}
+          onPress={navigationHandlerHome}
           color="transparent"
           title={<Text style={styles.buttonText}>Entrar</Text>}
         />
         </LinearGradient>
-        <TouchableOpacity onPress={() => { }} style={[styles.button, { backgroundColor: '#fafff9', borderColor: '#7E9F70' }]}>
+        <TouchableOpacity onPress={navigationHandler} style={[styles.button, { backgroundColor: '#fafff9', borderColor: '#7E9F70' }]}>
           <Text style={[styles.buttonText, { color: '#7E9F70' }]}>Criar conta</Text>
         </TouchableOpacity>
       </View>

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
 
 const PasswordInput = ({ value, onChangeText }) => {
   const [isPasswordVisible, setPasswordVisible] = React.useState(false);
@@ -27,10 +28,14 @@ const PasswordInput = ({ value, onChangeText }) => {
 };
 
 export default function LoginScreen() {
+  const navigation = useNavigation();
+  const navigationHandler = () => {
+    navigation.navigate("login")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.cancelContainer}>
-        <Text style={styles.cancelText}>Cancelar</Text>
+        <Text onPress={navigationHandler} style={styles.cancelText}>Cancelar</Text>
         <Image source={require('@/assets/images/avocado.png')} style={styles.image} />
       </View>
       <Text style={styles.title}>Crie sua conta</Text>
@@ -52,13 +57,13 @@ export default function LoginScreen() {
           style={styles.gradientButton}
         >
           <Button
-            onPress={() => { }}
+            onPress={navigationHandler}
             color="transparent"
             title={<Text style={styles.buttonText}>Cadastrar</Text>}
           />
         </LinearGradient>
       </View>
-      <Text style={styles.link}>Já tenho uma conta</Text>
+      <Text onPress={navigationHandler} style={styles.link}>Já tenho uma conta</Text>
     </View>
   );
 }
