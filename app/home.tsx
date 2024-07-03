@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#e4f0e2'
     },
     timerText: {
-        fontFamily: 'Open Sans',
-        fontWeight: '300',
+        fontFamily: 'OpenSans',
+        fontWeight: 'regular',
         fontSize: 50,
         color: '#1b3810',
     },
@@ -265,9 +265,9 @@ const styles = StyleSheet.create({
     avocadoText: {
         marginLeft: 20,
         fontSize: 18,
-        fontWeight: '400',
+        fontWeight: 'regular',
         color: '#4E0F09',
-        fontFamily: 'Open Sans',
+        fontFamily: 'OpenSans',
     },
     image: {
         width: 32,
@@ -351,9 +351,9 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginLeft: 20,
         fontSize: 30,
-        fontWeight: '700',
+        fontWeight: 'bold',
         color: '#1F371B',
-        fontFamily: 'Nunito Sans',
+        fontFamily: 'NunitoSans',
         lineHeight: 40
     },
     modalTextBody: {
@@ -361,9 +361,9 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         marginLeft: 20,
         fontSize: 18,
-        fontWeight: '400',
+        fontWeight: 'regular',
         color: '#1F371B',
-        fontFamily: 'Open Sans',
+        fontFamily: 'OpenSans',
         lineHeight: 30
     },
     imageOverlay: {
@@ -398,8 +398,8 @@ const styles = StyleSheet.create({
         color: '#5A312C',
         textAlign: 'center',
         paddingVertical: 5,
-        fontWeight: '500',
-        fontFamily: 'Nunito',
+        fontWeight: 'regular',
+        fontFamily: 'NunitoSans',
         fontSize: 16
     },
     container: {

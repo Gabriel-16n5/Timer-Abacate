@@ -31,6 +31,13 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "assets": ["./assets/fonts/"],
+    "fonts": {
+      "NunitoSans": {
+        "regular": "./assets/fonts/NunitoSans_10pt-Regular.ttf",
+        "bold": "./assets/fonts/NunitoSans_10pt-Bold.ttf"
+      }
     }
   }
 }
